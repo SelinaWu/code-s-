@@ -1,0 +1,28 @@
+def merge(self, intervals):
+        """
+        :type intervals: List[List[int]]
+        :rtype: List[List[int]]
+        """
+        if not intervals:
+            return []
+        
+        # sort by the start of the interval
+        intervals.sort(key=lambda x: x[0])
+        
+        # linear check with the current to the previous interval
+        pre_start, pre_end = intervals[0]
+        result = []
+        
+        for i in range(1, len(intervals)):
+            curr_start, curr_end = intervals[i]
+            if curr_start <= pre_end:
+                pre_end = max(pre_end, curr_end)
+                
+            else:
+                result.append([pre_start, pre_end])
+                pre_start = curr_start
+                pre_end = curr_end
+        
+        result.append([pre_start, pre_end])
+                
+        return result
