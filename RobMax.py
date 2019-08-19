@@ -17,3 +17,26 @@ def rob(self, nums):
             nums[i] += max(nums[i-2], nums[i-3])
             
         return max(nums[-1], max(nums[-2], nums[-3]))
+
+def rob(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        
+        def helpRob(root):
+            res = [0,0]
+            if not root:
+                return res
+            
+            left = helpRob(root.left)
+            right = helpRob(root.right)
+            # index 0: take current value, not take left/right
+            res[0] = left[1]+right[1]+root.val
+            # index 1: not take current value, 
+            # can choose to take left/right
+            res[1] = max(left[0], left[1])+max(right[0],right[1])
+            return res
+        
+        
+        return max(helpRob(root))
